@@ -3,8 +3,10 @@
 
 module chorochronodesy
 
+using NaturallyUnitful
 using Plots
 using Printf
+using Unitful
 
 
 export Event, SpacetimeTrajectory
