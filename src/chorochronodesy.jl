@@ -3,13 +3,12 @@
 
 module chorochronodesy
 
-using NaturallyUnitful
 using Plots
 using Printf
 using Unitful
 
 
-export Event, SpacetimeTrajectory
+export Event, SpacetimeTrajectory, gr_convert
 
 
 """
@@ -38,5 +37,21 @@ end
 Base.show(io::IO, stTraj::SpacetimeTrajectory) = show(io, string("blah"))
 Base.show(io::IO, m::MIME"text/plain", stTraj::SpacetimeTrajectory) = show(io, m, string("blah"))
 
+
+function gr_convert(x)
+    mps = 3e8
+    time_power = 0
+
+    for i in typeof(typeof(x).parameters[2]).parameters[1]
+        dim = typeof(i).parameters[1]
+        # println("  ", dim, " ", i.power)
+        if dim == :Time
+            time_power = i.power
+        end
+    end
+    # println("time_power: ", time_power)
+
+    return x * (mps^time_power) * u"m"^time_power * u"s"^(-time_power)
+end
 
 end

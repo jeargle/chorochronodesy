@@ -11,7 +11,6 @@
 
 using Dates
 
-# using NaturallyUnitful
 using Plots
 using Printf
 using Unitful
@@ -34,10 +33,26 @@ function test_ex_1_1()
 
     # (a)
     x = 10u"J"
-    z = x * (1/9e16)u"m^-2*s^2"
+    time_power = 0
+    for i in typeof(typeof(x).parameters[2]).parameters[1]
+        dim = typeof(i).parameters[1]
+        println("  ", dim, " ", i.power)
+        if dim == :Time
+            time_power = i.power
+        end
+    end
+    println("time_power: ", time_power)
+
+    mps = 3e8
+
+    # z = x * (1/9e16)u"m^-2*s^2"
+    z = x * (mps^time_power) * u"m"^time_power * u"s"^(-time_power)
     println("x: ", x)
     println("z: ", z)
     println(typeof(unit(z)))
+    println(uconvert(u"kg", z))
+    z = gr_convert(x)
+    println("z: ", z)
     println(uconvert(u"kg", z))
 end
 
