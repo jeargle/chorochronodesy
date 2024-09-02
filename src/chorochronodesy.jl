@@ -8,7 +8,8 @@ using Printf
 using Unitful
 
 
-export Event, SpacetimeTrajectory, gr_convert
+export Event, SpacetimeTrajectory
+export gr_convert, si_convert
 
 
 """
@@ -52,6 +53,13 @@ function gr_convert(x)
     # println("time_power: ", time_power)
 
     return x * (mps^time_power) * u"m"^time_power * u"s"^(-time_power)
+end
+
+
+function si_convert(x, time_power)
+    spm = 1/3e8
+
+    return x * (spm^time_power) * u"m"^(-time_power) * u"s"^time_power
 end
 
 end

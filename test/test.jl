@@ -54,6 +54,9 @@ function test_ex_1_1()
     z = gr_convert(x)
     println("z: ", z)
     println(uconvert(u"kg", z))
+    y = si_convert(z, -2)
+    println("y: ", y)
+    println(uconvert(u"J", y))
 end
 
 
