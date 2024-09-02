@@ -28,7 +28,7 @@ end
 function test_ex_1_1()
     print_test_header("Exercises 1.1")
 
-    cases = [Dict("desc" => "force",
+    cases = [Dict("desc" => "energy",
                   "value" => 10u"J",
                   "units" => u"kg"),
              Dict("desc" => "power output",
@@ -62,10 +62,43 @@ function test_ex_1_1()
     end
 end
 
+function test_ex_1_2()
+    print_test_header("Exercises 1.2")
+
+    cases = [Dict("desc" => "velocity",
+                  "value" => 1e-2,
+                  "time_power" => -1),
+             Dict("desc" => "pressure",
+                  "value" => 1e19u"kg*m^-3",
+                  "time_power" => 0),
+             Dict("desc" => "time",
+                  "value" => 1e18u"m",
+                  "time_power" => 1),
+             Dict("desc" => "energy density",
+                  "value" => 1u"kg*m^-3",
+                  "time_power" => -2,
+                  "units" => u"J*m^-3"),
+             Dict("desc" => "acceleration",
+                  "value" => 10u"m^-1",
+                  "time_power" => -2)]
+
+    for case in cases
+        println(case["desc"], ":")
+        println("  ", case["value"])
+        si_value = si_convert(case["value"], case["time_power"])
+        println("  ", si_value)
+        if haskey(case, "units")
+            println("  ", uconvert(case["units"], si_value))
+        end
+        println("  ", dimension(si_value))
+    end
+end
+
 
 
 function main()
     test_ex_1_1()
+    test_ex_1_2()
 end
 
 main()
