@@ -28,35 +28,38 @@ end
 function test_ex_1_1()
     print_test_header("Exercises 1.1")
 
-    # println(natural(10u"J"))
-    # println(natural(100u"W"))
+    cases = [Dict("desc" => "force",
+                  "value" => 10u"J",
+                  "units" => u"kg"),
+             Dict("desc" => "power output",
+                  "value" => 100u"W",
+                  "units" => u"kg/m"),
+             Dict("desc" => "hbar",
+                  "value" => 1.05e-34u"J*s",
+                  "units" => u"kg*m"),
+             Dict("desc" => "velocity of car",
+                  "value" => 30u"m*s^-1"),
+             Dict("desc" => "momentum of car",
+                  "value" => 3e4u"kg*m*s^-1"),
+             Dict("desc" => "one atmosphere of pressure",
+                  "value" => 1e5u"N*m^-2",
+                  "units" => u"kg*m^-3"),
+             Dict("desc" => "density of water",
+                  "value" => 1e3u"kg*m^-3"),
+             Dict("desc" => "luminosity flux",
+                  "value" => 1e6u"J*s^-1*cm^-2",
+                  "units" => u"kg*m^-3")]
 
-    # (a)
-    x = 10u"J"
-    time_power = 0
-    for i in typeof(typeof(x).parameters[2]).parameters[1]
-        dim = typeof(i).parameters[1]
-        println("  ", dim, " ", i.power)
-        if dim == :Time
-            time_power = i.power
+    for case in cases
+        println(case["desc"], ":")
+        println("  ", case["value"])
+        gr_value = gr_convert(case["value"])
+        println("  ", gr_value)
+        if haskey(case, "units")
+            println("  ", uconvert(case["units"], gr_value))
         end
+        println("  ", dimension(gr_value))
     end
-    println("time_power: ", time_power)
-
-    mps = 3e8
-
-    # z = x * (1/9e16)u"m^-2*s^2"
-    z = x * (mps^time_power) * u"m"^time_power * u"s"^(-time_power)
-    println("x: ", x)
-    println("z: ", z)
-    println(typeof(unit(z)))
-    println(uconvert(u"kg", z))
-    z = gr_convert(x)
-    println("z: ", z)
-    println(uconvert(u"kg", z))
-    y = si_convert(z, -2)
-    println("y: ", y)
-    println(uconvert(u"J", y))
 end
 
 
