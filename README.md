@@ -4,10 +4,13 @@ chorochronodesy
 spacetime toolkit
 
 
+General
+-------
+
+
 Dependencies
 ------------
 
-* NaturallyUnitful
 * Plots
 * Printf
 * Unitful
