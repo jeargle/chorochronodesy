@@ -9,8 +9,34 @@ using Unitful
 using UUIDs
 
 
-export Event, SpacetimeTrajectory
+export Frame, FrameStore, Event, SpacetimeTrajectory
 export gr_convert, si_convert
+
+
+"""
+Model for reference frame.
+"""
+struct Frame
+    id::String
+
+    Frame(id::String) = new(id)
+end
+
+Base.show(io::IO, frame::Frame) = show(io, frame.id)
+Base.show(io::IO, m::MIME"text/plain", frame::Frame) = show(io, m, frame.id)
+
+
+"""
+Model to store velocity differences between pairs of Frames.
+"""
+mutable struct FrameStore
+    frames::Dict{String, Frame}
+
+    FrameStore(frames::Dict{String, Frame}) = new(frames)
+end
+
+Base.show(io::IO, framestore::FrameStore) = show(io, string())
+Base.show(io::IO, m::MIME"text/plain", framestore::FrameStore) = show(io, m, string())
 
 
 """
