@@ -14,3 +14,4 @@ Dependencies
 * Plots
 * Printf
 * Unitful
+* UUIDs

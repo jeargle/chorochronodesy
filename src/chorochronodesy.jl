@@ -6,6 +6,7 @@ module chorochronodesy
 using Plots
 using Printf
 using Unitful
+using UUIDs
 
 
 export Event, SpacetimeTrajectory
